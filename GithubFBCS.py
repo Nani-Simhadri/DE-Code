@@ -15,15 +15,15 @@ from scipy.optimize import differential_evolution, NonlinearConstraint
     and a list of the research papers, which have discussed the applications of the DE algorithm towards the 
     instrumentation area, is given below.
 
-    [2] S. Sundararajan, K. N. Madhusoodanan, A. Abudhahir and G. Noble, "Implementation and Analysis of an 
-    Evolutionary Optimized Non-Linear Function for Linearization of Thermo-Resistive Sensors," 6th International Conference 
-    on Devices, Circuits and Systems (ICDCS), Coimbatore, India, 2022, pp. 74-79, doi: 10.1109/ICDCS54290.2022.9780706.
-
-    [3] R. Yang, X. Li, R. Cong and J. Du, "A Novel Cylindricity Measurement Method for Large Workpiece Based on Improved Model and Algorithm,
+    [2] R. Yang, X. Li, R. Cong and J. Du, "A Novel Cylindricity Measurement Method for Large Workpiece Based on Improved Model and Algorithm,
         " in IEEE Transactions on Instrumentation and Measurement, vol. 73, pp. 1-11, 2024, Art no. 3000211, doi: 10.1109/TIM.2023.3331408.
 
-    [4] Z. Qiu and Y. Zhang, "Three-Dimensional Low-Frequency Earthquake Monitoring Vibration Sensor Based on FBG,
-        " in IEEE Transactions on Instrumentation and Measurement, vol. 73, pp. 1-9, 2024, Art no. 9510709, doi: 10.1109/TIM.2024.3406839.
+    [3] Z. Qiu and Y. Zhang, "Three-Dimensional Low-Frequency Earthquake Monitoring Vibration Sensor Based on FBG," 
+        in IEEE Transactions on Instrumentation and Measurement, vol. 73, pp. 1-9, 2024, Art no. 9510709, doi: 10.1109/TIM.2024.3406839.
+
+    [4] S. Sundararajan, K. N. Madhusoodanan, A. Abudhahir and G. Noble, "Implementation and Analysis of an 
+        Evolutionary Optimized Non-Linear Function for Linearization of Thermo-Resistive Sensors," 6th International Conference 
+        on Devices, Circuits and Systems (ICDCS), Coimbatore, India, 2022, pp. 74-79, doi: 10.1109/ICDCS54290.2022.9780706.
 
     [5] S. Murugan, Dr. SP. Umayal, Dr. K. Srinivasan and M.Aruna. "Nonlinearity Error Compensation of Venturi 
         Flow Meter Using Evolutionary Optimization Algorithms" International Journal for Innovative Research 
@@ -81,7 +81,7 @@ def Calculate_Vtheta(T, RT, VR, GA, a, Y, Rp):
 
 def BFL(T, RT, VR, GA, a, Y, Rp):
     '''
-    Computation of the best fit line (BFL) for the output equation of the linearization circuit of the thermistor (say, V)
+    Computation of the best fit line (BFL) for the output equation of the linearization circuit of the thermistor (say, Vtheta)
     '''
     VO1 = (((GA*(VR))*(RT-(Rp)))/((2*(RT+(Rp))+(GA*(-Y)*(RT-(Rp))))))
     VO2 = ((((GA*(VR))*(RT-(Rp)))/((2*(RT+(Rp)))+(GA*(Y)*(RT-(Rp))))))
@@ -104,7 +104,7 @@ def SC(T, RT, VR, GA, a, Y, Rp):
 
 def Calculate_SHE(T, RT, VR, GA, a, Y, Rp):
     '''
-    defines the function that computes the self-heating error of the thermistor using dissipation constant
+    defines the function that computes the self-heating error (SHE) of the thermistor using dissipation constant
     '''
 
     VO1 = (((GA*(VR))*(RT-(Rp)))/((2*(RT+(Rp))+(GA*(-Y)*(RT-(Rp))))))
@@ -132,6 +132,7 @@ def Calculate_SHE(T, RT, VR, GA, a, Y, Rp):
     SHE = Pmax/D 
 
     return(SHE)
+
 def to_minimize(R):
     '''
     defines the optimization problem i.e, objective function that needs to be minimized (%NL) and computes the decision variable vector.
@@ -197,7 +198,7 @@ def constr_f4(x):
 
 def constr_f5(x):
     '''
-    defines the constraint function on the self-heating erro (SHE)
+    defines the constraint function on the self-heating error (SHE)
     '''
     GA, VR, a, Rp, Y = x
     return Calculate_SHE(T, RT, VR, GA, a, Y, Rp)
